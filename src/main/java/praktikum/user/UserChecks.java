@@ -60,5 +60,4 @@ public class UserChecks {
                 .path("message");
         assertEquals(message,"User successfully removed");
     }
-
 }

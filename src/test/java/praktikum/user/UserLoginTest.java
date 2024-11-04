@@ -82,5 +82,4 @@ public class UserLoginTest {
          ValidatableResponse loginResponse = client.loginUser(creds);
          check.checkBadRequestUnauthorized(loginResponse);
     }
-
 }

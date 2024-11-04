@@ -83,4 +83,5 @@ public class UserCreateTest {
         ValidatableResponse createResponse = client.createUser(user);
         check.checkBadRequestForbidden(createResponse);
     }
+
 }
