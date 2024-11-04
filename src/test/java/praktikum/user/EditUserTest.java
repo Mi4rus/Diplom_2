@@ -35,6 +35,5 @@ public class EditUserTest {
 
         ValidatableResponse editResponse = client.editUser(accessToken);
         check.checkEditUser(editResponse);
-
     }
 }
