@@ -26,5 +26,4 @@ public class UserCredentionals {
     public String getPassword() {
         return password;
     }
-
 }

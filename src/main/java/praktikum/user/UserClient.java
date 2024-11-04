@@ -34,5 +34,4 @@ public class UserClient extends praktikum.Client{
                 .delete(USER_PATH + "/user")
                 .then().log().all();
     }
-
 }

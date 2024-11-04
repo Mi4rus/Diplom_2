@@ -15,6 +15,3 @@ public class Client {
                 .basePath(BASE_PATH);
     }
 }
-//given().log().all()
-//                .contentType(ContentType.JSON)
-//                .header("Authorization", "Bearer ...")
