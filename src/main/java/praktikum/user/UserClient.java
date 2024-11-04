@@ -34,4 +34,22 @@ public class UserClient extends praktikum.Client{
                 .delete(USER_PATH + "/user")
                 .then().log().all();
     }
+
+    @Step("Получение данных пользователя")
+    public ValidatableResponse getUserData(String token){
+        return spec()
+                .header("Authorization",token)
+                .when()
+                .get(USER_PATH + "/user")
+                .then().log().all();
+    }
+
+    @Step("Изменение данных пользователя")
+    public ValidatableResponse editUser(String token){
+        return spec()
+                .header("Authorization",token)
+                .when()
+                .patch(USER_PATH + "/user")
+                .then().log().all();
+    }
 }

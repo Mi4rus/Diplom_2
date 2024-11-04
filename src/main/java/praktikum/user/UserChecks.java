@@ -2,6 +2,8 @@ package praktikum.user;
 
 import io.restassured.response.ValidatableResponse;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class UserChecks {
@@ -52,8 +54,8 @@ public class UserChecks {
 
     }
 
-    public void deleteUser(ValidatableResponse response){
-        String message = response
+    public void deleteUser(ValidatableResponse loginResponse){
+        String message = loginResponse
                 .assertThat()
                 .statusCode(202)
                 .extract()
@@ -61,4 +63,20 @@ public class UserChecks {
         assertEquals(message,"User successfully removed");
     }
 
+    public void checkGetUserData(ValidatableResponse editResponse){
+        boolean success = editResponse
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .path("success");
+        assertTrue(success);
+    }
+    public void checkEditUser(ValidatableResponse editResponse){
+        boolean success = editResponse
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .path("success");
+        assertTrue(success);
+    }
 }

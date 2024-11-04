@@ -10,10 +10,13 @@ public class UserCreateTest {
     private UserChecks check = new UserChecks();
 
     String accessToken;
-    String refreshToken;
 
     @After
     public void deleteUser(){
+        if(accessToken != null){
+            ValidatableResponse response = client.deleteUser(accessToken);
+            check.deleteUser(response);
+        }
     }
 
     @Test
@@ -22,6 +25,11 @@ public class UserCreateTest {
         var user = User.randomUser();
         ValidatableResponse createResponse = client.createUser(user);
         check.checkCreated(createResponse);
+
+        // авторизация для удаления пользователя
+        var creds = UserCredentionals.fromUser(user);
+        ValidatableResponse loginResponse = client.loginUser(creds);
+        accessToken = check.checkLoggedIn(loginResponse);
     }
 
     @Test

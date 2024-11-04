@@ -10,7 +10,6 @@ public class UserLoginTest {
     private UserChecks check = new UserChecks();
 
     String accessToken;
-    String refreshToken;
 
     @After
     public void deleteUser(){

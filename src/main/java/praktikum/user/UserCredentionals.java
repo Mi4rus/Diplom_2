@@ -19,6 +19,7 @@ public class UserCredentionals {
         return creds;
     }
 
+
     public String getEmail() {
         return email;
     }
