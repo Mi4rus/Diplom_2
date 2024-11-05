@@ -30,10 +30,42 @@ public class EditUserTest {
         ValidatableResponse loginResponse = client.loginUser(creds);
         accessToken = check.checkLoggedIn(loginResponse);
 
-        ValidatableResponse getUserResponse = client.getUserData(accessToken);
-        check.checkGetUserData(getUserResponse);
-
-        ValidatableResponse editResponse = client.editUser(accessToken);
+        var data = UserData.fromChangeDataUser(user);
+        ValidatableResponse editResponse = client.editUser(accessToken, data);
         check.checkEditUser(editResponse);
     }
+
+    @Test
+    @DisplayName("Изменение данных пользователя без авторизации")
+    public void failedUnauthorizedEditUserTest(){
+        var user = User.randomUser();
+        ValidatableResponse createResponse = client.createUser(user);
+        check.checkCreated(createResponse);
+
+        var data = UserData.fromChangeDataUser(user);
+        ValidatableResponse editResponse = client.editUserUnauthorized(data);
+        check.checkBadRequestEditUnauthorized(editResponse);
+    }
+
+    @Test
+    @DisplayName("Невозможно изменить почту на существующую")
+    public void failedChangeEmailEditUserTest(){
+        var user1 = User.randomUser();
+        var user2 = User.randomUser();
+
+        ValidatableResponse createResponse1 = client.createUser(user1);
+        check.checkCreated(createResponse1);
+        ValidatableResponse createResponse2 = client.createUser(user2);
+        check.checkCreated(createResponse2);
+
+        var creds2 = UserCredentionals.fromUser(user2);
+        ValidatableResponse loginResponse2= client.loginUser(creds2);
+        accessToken = check.checkLoggedIn(loginResponse2);
+
+        var data = UserData.dataUser(user1);
+        ValidatableResponse editResponse = client.editDuplicateEmailUser(accessToken,data);
+        check.checkDuplicateEmailForbiddenEdit(editResponse);
+    }
+
+
 }

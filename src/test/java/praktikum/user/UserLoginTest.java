@@ -37,7 +37,7 @@ public class UserLoginTest {
 
         var creds = UserCredentionals.fromUser(user);
         ValidatableResponse loginResponse = client.loginUser(creds);
-        check.checkBadRequestUnauthorized(loginResponse);
+        check.checkBadRequestLoginUnauthorized(loginResponse);
     }
     @Test
     @DisplayName("Невозможно авторизоваться без email")
@@ -46,7 +46,7 @@ public class UserLoginTest {
 
         var creds = UserCredentionals.fromUser(user);
         ValidatableResponse loginResponse = client.loginUser(creds);
-        check.checkBadRequestUnauthorized(loginResponse);
+        check.checkBadRequestLoginUnauthorized(loginResponse);
     }
 
     @Test
@@ -56,7 +56,7 @@ public class UserLoginTest {
 
         var creds = UserCredentionals.fromUser(user);
         ValidatableResponse loginResponse = client.loginUser(creds);
-        check.checkBadRequestUnauthorized(loginResponse);
+        check.checkBadRequestLoginUnauthorized(loginResponse);
     }
 
     @Test
@@ -66,7 +66,7 @@ public class UserLoginTest {
 
         var creds = UserCredentionals.fromUser(user);
         ValidatableResponse loginResponse = client.loginUser(creds);
-        check.checkBadRequestUnauthorized(loginResponse);
+        check.checkBadRequestLoginUnauthorized(loginResponse);
     }
 
     @Test
@@ -79,7 +79,7 @@ public class UserLoginTest {
 
          var creds = UserCredentionals.fromNonExistentUser(user);
          ValidatableResponse loginResponse = client.loginUser(creds);
-         check.checkBadRequestUnauthorized(loginResponse);
+         check.checkBadRequestLoginUnauthorized(loginResponse);
     }
 
 }

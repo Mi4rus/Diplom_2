@@ -44,10 +44,29 @@ public class UserClient extends praktikum.Client{
                 .then().log().all();
     }
 
-    @Step("Изменение данных пользователя")
-    public ValidatableResponse editUser(String token){
+    @Step("Изменение данных пользователя c использованием токена авторизации")
+    public ValidatableResponse editUser(String token,UserData data){
         return spec()
                 .header("Authorization",token)
+                .body(data)
+                .when()
+                .patch(USER_PATH + "/user")
+                .then().log().all();
+    }
+    @Step("Изменение данных пользователя на уже существующие c использованием токена авторизации")
+    public ValidatableResponse editDuplicateEmailUser(String token,UserData data){
+        return spec()
+                .header("Authorization",token)
+                .body(data)
+                .when()
+                .patch(USER_PATH + "/user")
+                .then().log().all();
+    }
+
+    @Step("Изменение данных пользователя без токена авторизации")
+    public ValidatableResponse editUserUnauthorized(UserData data){
+        return spec()
+                .body(data)
                 .when()
                 .patch(USER_PATH + "/user")
                 .then().log().all();

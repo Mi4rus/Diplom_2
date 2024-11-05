@@ -41,7 +41,7 @@ public class UserCreateTest {
         check.checkCreated(createResponse1);
 
         ValidatableResponse createResponse2 = client.createUser(user2);
-        check.checkDuplicateForbidden(createResponse2);
+        check.checkDuplicateCreateForbidden(createResponse2);
 
     }
 
@@ -50,14 +50,14 @@ public class UserCreateTest {
     public void failedBadRequestWithoutEmailCreateUserTest(){
         var user = User.userWithoutEmail();
         ValidatableResponse createResponse = client.createUser(user);
-        check.checkBadRequestForbidden(createResponse);
+        check.checkBadRequestCreateForbidden(createResponse);
     }
     @Test
     @DisplayName("Невозможно создать пользователя c пустым email")
     public void failedBadRequestWithEmptyEmailCreateUserTest(){
         var user = User.userWithEmptyEmail();
         ValidatableResponse createResponse = client.createUser(user);
-        check.checkBadRequestForbidden(createResponse);
+        check.checkBadRequestCreateForbidden(createResponse);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class UserCreateTest {
     public void failedBadRequestWithoutPasswordCreateUserTest(){
         var user = User.userWithoutPassword();
         ValidatableResponse createResponse = client.createUser(user);
-        check.checkBadRequestForbidden(createResponse);
+        check.checkBadRequestCreateForbidden(createResponse);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class UserCreateTest {
     public void failedBadRequestWithEmptyPasswordCreateUserTest(){
         var user = User.userWithEmptyPassword();
         ValidatableResponse createResponse = client.createUser(user);
-        check.checkBadRequestForbidden(createResponse);
+        check.checkBadRequestCreateForbidden(createResponse);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class UserCreateTest {
     public void failedBadRequestWithoutNameCreateUserTest(){
         var user = User.userWithoutName();
         ValidatableResponse createResponse = client.createUser(user);
-        check.checkBadRequestForbidden(createResponse);
+        check.checkBadRequestCreateForbidden(createResponse);
     }
 
     @Test
@@ -89,6 +89,6 @@ public class UserCreateTest {
     public void failedBadRequestWithEmptyNameCreateUserTest(){
         var user = User.userWithEmptyName();
         ValidatableResponse createResponse = client.createUser(user);
-        check.checkBadRequestForbidden(createResponse);
+        check.checkBadRequestCreateForbidden(createResponse);
     }
 }

@@ -16,7 +16,7 @@ public class UserChecks {
 
         assertTrue(created);
     }
-    public void checkDuplicateForbidden(ValidatableResponse response){
+    public void checkDuplicateCreateForbidden(ValidatableResponse response){
         String message = response
                 .assertThat()
                 .statusCode(403)
@@ -25,7 +25,7 @@ public class UserChecks {
         assertEquals(message,"User already exists");
     }
 
-    public void checkBadRequestForbidden(ValidatableResponse response){
+    public void checkBadRequestCreateForbidden(ValidatableResponse response){
         String message = response
                 .assertThat()
                 .statusCode(403)
@@ -44,7 +44,7 @@ public class UserChecks {
         return token;
     }
 
-    public void checkBadRequestUnauthorized(ValidatableResponse loginResponse){
+    public void checkBadRequestLoginUnauthorized(ValidatableResponse loginResponse){
         String message = loginResponse
                 .assertThat()
                 .statusCode(401)
@@ -78,5 +78,22 @@ public class UserChecks {
                 .extract()
                 .path("success");
         assertTrue(success);
+    }
+    public void checkBadRequestEditUnauthorized(ValidatableResponse editResponse){
+        String message = editResponse
+                .assertThat()
+                .statusCode(401)
+                .extract()
+                .path("message");
+        assertEquals(message,"You should be authorised");
+    }
+
+    public void checkDuplicateEmailForbiddenEdit(ValidatableResponse editResponse){
+        String message = editResponse
+                .assertThat()
+                .statusCode(403)
+                .extract()
+                .path("message");
+        assertEquals(message,"User with such email already exists");
     }
 }
