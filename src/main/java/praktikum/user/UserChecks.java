@@ -2,8 +2,6 @@ package praktikum.user;
 
 import io.restassured.response.ValidatableResponse;
 
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 public class UserChecks {
