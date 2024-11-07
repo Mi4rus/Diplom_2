@@ -25,8 +25,8 @@ public class OrderCreateTest {
     }
 
     @Test
-    @DisplayName("Создание заказа с ингридиентами авторизованным пользователем")
-    public void successCreateOrder(){
+    @DisplayName("Создание заказа с ингредиентами авторизованным пользователем")
+    public void successAuthorizedUserCreateOrder(){
         var user = User.randomUser();
         ValidatableResponse createResponse = client.createUser(user);
         check.checkCreated(createResponse);
@@ -36,7 +36,48 @@ public class OrderCreateTest {
         accessToken = check.checkLoggedIn(loginResponse);
 
         var order = Order.orderWithIngredients();
-        ValidatableResponse orderResponse = orderClient.createOrder(order,accessToken);
+        ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
+    }
+
+    @Test
+    @DisplayName("Создание заказа с ингредиентами неавторизованным пользователем")
+    public void successUnauthorizedUserCreateOrder(){
+
+        var order = Order.orderWithIngredients();
+        ValidatableResponse orderResponse = orderClient.createUnauthorizedUserOrder(order);
+        ordercheck.checkCreated(orderResponse);
+    }
+
+    @Test
+    @DisplayName("Создание заказа без ингредиентов")
+    public void failedWithoutIngredientsCreateOrder(){
+        var user = User.randomUser();
+        ValidatableResponse createResponse = client.createUser(user);
+        check.checkCreated(createResponse);
+
+        var creds = UserCredentionals.fromUser(user);
+        ValidatableResponse loginResponse = client.loginUser(creds);
+        accessToken = check.checkLoggedIn(loginResponse);
+
+        var order = Order.orderWithoutIngredients();
+        ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
+        ordercheck.checkBadRequestCreated(orderResponse);
+    }
+
+    @Test
+    @DisplayName("Создание заказа без ингредиентов")
+    public void failedWithWrongIngredientsCreateOrder(){
+        var user = User.randomUser();
+        ValidatableResponse createResponse = client.createUser(user);
+        check.checkCreated(createResponse);
+
+        var creds = UserCredentionals.fromUser(user);
+        ValidatableResponse loginResponse = client.loginUser(creds);
+        accessToken = check.checkLoggedIn(loginResponse);
+
+        var order = Order.orderWithWrongIngredients();
+        ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
+        ordercheck.checkCreatedWithWrongIngredients(orderResponse);
     }
 }
