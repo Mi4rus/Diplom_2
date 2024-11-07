@@ -40,6 +40,10 @@ public class UserCreateTest {
         ValidatableResponse createResponse1 = client.createUser(user1);
         check.checkCreated(createResponse1);
 
+        var creds = UserCredentionals.fromUser(user1);
+        ValidatableResponse loginResponse = client.loginUser(creds);
+        accessToken = check.checkLoggedIn(loginResponse);
+
         ValidatableResponse createResponse2 = client.createUser(user2);
         check.checkDuplicateCreateForbidden(createResponse2);
 
