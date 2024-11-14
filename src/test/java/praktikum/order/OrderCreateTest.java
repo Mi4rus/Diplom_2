@@ -9,12 +9,15 @@ import praktikum.user.UserChecks;
 import praktikum.user.UserClient;
 import praktikum.user.UserCredentionals;
 
+import java.util.ArrayList;
+
 public class OrderCreateTest {
     private UserClient client = new UserClient();
     private UserChecks check = new UserChecks();
     private OrderClient orderClient = new OrderClient();
     private OrderChecks ordercheck = new OrderChecks();
-    String accessToken;
+    private String accessToken;
+    private ArrayList<String> _id;
 
     @After
     public void deleteUser(){
@@ -35,7 +38,10 @@ public class OrderCreateTest {
         ValidatableResponse loginResponse = client.loginUser(creds);
         accessToken = check.checkLoggedIn(loginResponse);
 
-        var order = Order.orderWithIngredients();
+        ValidatableResponse dataResponse = orderClient.getAllIngredients();
+        _id = ordercheck.checkGetIngredients(dataResponse);
+
+        var order = new Order(_id);
         ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
     }
@@ -43,8 +49,10 @@ public class OrderCreateTest {
     @Test
     @DisplayName("Создание заказа с ингредиентами неавторизованным пользователем")
     public void successUnauthorizedUserCreateOrder(){
+        ValidatableResponse dataResponse = orderClient.getAllIngredients();
+        _id = ordercheck.checkGetIngredients(dataResponse);
 
-        var order = Order.orderWithIngredients();
+        var order = new Order(_id);
         ValidatableResponse orderResponse = orderClient.createUnauthorizedUserOrder(order);
         ordercheck.checkCreated(orderResponse);
     }
@@ -66,7 +74,7 @@ public class OrderCreateTest {
     }
 
     @Test
-    @DisplayName("Создание заказа без ингредиентов")
+    @DisplayName("Создание заказа с несуществующими ингредиентами")
     public void failedWithWrongIngredientsCreateOrder(){
         var user = User.randomUser();
         ValidatableResponse createResponse = client.createUser(user);

@@ -35,17 +35,16 @@ public class UserCreateTest {
     @Test
     @DisplayName("Невозможно создать двух одинаковых пользователей")
     public void failedDuplicateCreateUserTest(){
-        var user1 = User.randomUser();
-        var user2 = user1;
-        ValidatableResponse createResponse1 = client.createUser(user1);
-        check.checkCreated(createResponse1);
+        var user = User.randomUser();
+        ValidatableResponse createResponse = client.createUser(user);
+        check.checkCreated(createResponse);
 
-        var creds = UserCredentionals.fromUser(user1);
+        var creds = UserCredentionals.fromUser(user);
         ValidatableResponse loginResponse = client.loginUser(creds);
         accessToken = check.checkLoggedIn(loginResponse);
 
-        ValidatableResponse createResponse2 = client.createUser(user2);
-        check.checkDuplicateCreateForbidden(createResponse2);
+        ValidatableResponse duplicateResponse = client.createUser(user);
+        check.checkDuplicateCreateForbidden(duplicateResponse);
 
     }
 

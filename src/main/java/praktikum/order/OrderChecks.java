@@ -2,8 +2,9 @@ package praktikum.order;
 
 import io.restassured.response.ValidatableResponse;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 public class OrderChecks {
     public void checkCreated(ValidatableResponse orderResponse){
@@ -44,6 +45,17 @@ public class OrderChecks {
                 .path("success");
 
         assertTrue(created);
+    }
+
+    public ArrayList <String> checkGetIngredients(ValidatableResponse dataResponse){
+        ArrayList <String> _id = dataResponse
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .path("data._id");
+        assertNotNull(_id);
+
+        return _id;
     }
 
     public void checkGetOrdersWithoutAuthorization(ValidatableResponse orderResponse){

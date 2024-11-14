@@ -9,13 +9,16 @@ import praktikum.user.UserChecks;
 import praktikum.user.UserClient;
 import praktikum.user.UserCredentionals;
 
+import java.util.ArrayList;
+
 public class GetOrderOfClientTest {
 
     private UserClient client = new UserClient();
     private UserChecks check = new UserChecks();
     private OrderClient orderClient = new OrderClient();
     private OrderChecks ordercheck = new OrderChecks();
-    String accessToken;
+    private String accessToken;
+    private ArrayList<String> _id;
 
     @After
     public void deleteUser(){
@@ -36,7 +39,10 @@ public class GetOrderOfClientTest {
         ValidatableResponse loginResponse = client.loginUser(creds);
         accessToken = check.checkLoggedIn(loginResponse);
 
-        var order = Order.orderWithIngredients();
+        ValidatableResponse dataResponse = orderClient.getAllIngredients();
+        _id = ordercheck.checkGetIngredients(dataResponse);
+
+        var order = new Order(_id);
         ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
 
@@ -55,7 +61,10 @@ public class GetOrderOfClientTest {
         ValidatableResponse loginResponse = client.loginUser(creds);
         accessToken = check.checkLoggedIn(loginResponse);
 
-        var order = Order.orderWithIngredients();
+        ValidatableResponse dataResponse = orderClient.getAllIngredients();
+        _id = ordercheck.checkGetIngredients(dataResponse);
+
+        var order = new Order(_id);
         ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
 

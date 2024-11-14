@@ -4,6 +4,7 @@ import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 
 public class OrderClient extends praktikum.Client{
+    private static final String INGREDIENTS_PATH = "/ingredients";
     private static final String ORDER_PATH = "/orders";
 
     @Step("Создание заказа")
@@ -22,6 +23,13 @@ public class OrderClient extends praktikum.Client{
                 .body(order)
                 .when()
                 .post(ORDER_PATH)
+                .then().log().all();
+    }
+    @Step("Получение всех ингредиентов")
+    public ValidatableResponse getAllIngredients (){
+        return spec()
+                .when()
+                .get(INGREDIENTS_PATH)
                 .then().log().all();
     }
 

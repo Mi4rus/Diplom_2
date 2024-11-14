@@ -10,11 +10,6 @@ public class Order {
         return ingredients;
     }
 
-    public static Order orderWithIngredients(){
-        return new Order(new ArrayList<>(){
-            {add("61c0c5a71d1f82001bdaaa6d");}});
-    }
-
     public static Order orderWithoutIngredients(){
         return new Order(new ArrayList<>());
     }
