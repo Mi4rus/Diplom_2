@@ -48,14 +48,14 @@ public class OrderChecks {
     }
 
     public ArrayList <String> checkGetIngredients(ValidatableResponse dataResponse){
-        ArrayList <String> _id = dataResponse
+        ArrayList <String> id = dataResponse
                 .assertThat()
                 .statusCode(200)
                 .extract()
                 .path("data._id");
-        assertNotNull(_id);
+        assertNotNull(id);
 
-        return _id;
+        return id;
     }
 
     public void checkGetOrdersWithoutAuthorization(ValidatableResponse orderResponse){

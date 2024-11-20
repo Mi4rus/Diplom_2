@@ -18,7 +18,7 @@ public class GetOrderOfClientTest {
     private OrderClient orderClient = new OrderClient();
     private OrderChecks ordercheck = new OrderChecks();
     private String accessToken;
-    private ArrayList<String> _id;
+    private ArrayList<String> id;
 
     @After
     public void deleteUser(){
@@ -40,9 +40,9 @@ public class GetOrderOfClientTest {
         accessToken = check.checkLoggedIn(loginResponse);
 
         ValidatableResponse dataResponse = orderClient.getAllIngredients();
-        _id = ordercheck.checkGetIngredients(dataResponse);
+        id = ordercheck.checkGetIngredients(dataResponse);
 
-        var order = new Order(_id);
+        var order = new Order(id);
         ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
 
@@ -62,9 +62,9 @@ public class GetOrderOfClientTest {
         accessToken = check.checkLoggedIn(loginResponse);
 
         ValidatableResponse dataResponse = orderClient.getAllIngredients();
-        _id = ordercheck.checkGetIngredients(dataResponse);
+        id = ordercheck.checkGetIngredients(dataResponse);
 
-        var order = new Order(_id);
+        var order = new Order(id);
         ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
 

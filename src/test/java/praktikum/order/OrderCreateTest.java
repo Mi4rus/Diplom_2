@@ -17,7 +17,7 @@ public class OrderCreateTest {
     private OrderClient orderClient = new OrderClient();
     private OrderChecks ordercheck = new OrderChecks();
     private String accessToken;
-    private ArrayList<String> _id;
+    private ArrayList<String> id;
 
     @After
     public void deleteUser(){
@@ -39,9 +39,9 @@ public class OrderCreateTest {
         accessToken = check.checkLoggedIn(loginResponse);
 
         ValidatableResponse dataResponse = orderClient.getAllIngredients();
-        _id = ordercheck.checkGetIngredients(dataResponse);
+        id = ordercheck.checkGetIngredients(dataResponse);
 
-        var order = new Order(_id);
+        var order = new Order(id);
         ValidatableResponse orderResponse = orderClient.createAuthorizedUserOrder(order,accessToken);
         ordercheck.checkCreated(orderResponse);
     }
@@ -50,9 +50,9 @@ public class OrderCreateTest {
     @DisplayName("Создание заказа с ингредиентами неавторизованным пользователем")
     public void successUnauthorizedUserCreateOrder(){
         ValidatableResponse dataResponse = orderClient.getAllIngredients();
-        _id = ordercheck.checkGetIngredients(dataResponse);
+        id = ordercheck.checkGetIngredients(dataResponse);
 
-        var order = new Order(_id);
+        var order = new Order(id);
         ValidatableResponse orderResponse = orderClient.createUnauthorizedUserOrder(order);
         ordercheck.checkCreated(orderResponse);
     }
